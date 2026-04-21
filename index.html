@@ -213,7 +213,8 @@
                     </div>
                 </div>
 
-                <div class="reveal reveal-right delay-200 relative px-4 lg:px-0">
+                <!-- Gambar disembunyikan pada mode mobile, muncul pada mode desktop (lg) -->
+                <div class="reveal reveal-right delay-200 relative px-4 lg:px-0 hidden lg:block">
                     <div class="relative rounded-[32px] md:rounded-[40px] overflow-hidden border-4 md:border-8 border-white shadow-2xl">
                         <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-20%20at%2022.40.13%20(1).jpeg" alt="Sesi Terapi" class="w-full h-[350px] md:h-[550px] object-cover">
                     </div>
@@ -225,9 +226,9 @@
     <!-- 2. Bagian Layanan -->
     <section id="layanan" class="py-20 md:py-24 bg-gray-50 border-y border-gray-100">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16">
+            <div class="text-center lg:text-center mb-16">
                 <span class="reveal reveal-up text-emerald-600 font-bold tracking-widest text-xs uppercase mb-3 block">Pelayanan Terapi</span>
-                <h2 class="reveal reveal-up delay-100 text-3xl md:text-4xl font-serif font-bold text-emerald-950 mb-4">Kami Melayani Beberapa Terapi</h2>
+                <h2 class="reveal reveal-up delay-100 text-3xl md:text-4xl font-serif font-bold text-emerald-950 mb-4">Kami Melayani Terapi</h2>
                 <div class="reveal reveal-up delay-200 w-20 h-1.5 bg-gold-500 mx-auto rounded-full"></div>
             </div>
 
@@ -691,7 +692,6 @@
 
         function updateSlider() {
             const isMobile = window.innerWidth < 768;
-            const maxIndex = items.length - (isMobile ? 1 : 1); 
             
             // Loop logic
             if (index < 0) index = items.length - 1;
