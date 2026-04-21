@@ -120,6 +120,7 @@
                 <div class="flex-shrink-0 flex items-center">
                     <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/ce1e40bc981d8c63ebdfb617bc28dc044634ef71/LOGO%20SEJATI.png" alt="Terapi Kesehatan Sejati" class="h-14 md:h-16 w-auto">
                 </div>
+                <!-- Desktop Menu -->
                 <div class="hidden lg:flex space-x-8 items-center">
                     <a href="#layanan" class="text-gray-600 hover:text-emerald-600 font-medium transition">Layanan</a>
                     <a href="#galeri" class="text-gray-600 hover:text-emerald-600 font-medium transition">Dokumentasi</a>
@@ -130,9 +131,24 @@
                         <i class="fa-brands fa-whatsapp"></i> Konsultasi Gratis
                     </a>
                 </div>
-                <div class="lg:hidden text-emerald-900 text-xl">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
+                <!-- Mobile Toggle Button -->
+                <button id="menu-toggle" class="lg:hidden text-emerald-900 text-2xl focus:outline-none p-2">
+                    <i class="fa-solid fa-bars" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-xl py-6 px-4 space-y-4">
+            <a href="#layanan" class="mobile-link block text-gray-600 font-medium border-b border-gray-50 pb-2">Layanan</a>
+            <a href="#galeri" class="mobile-link block text-gray-600 font-medium border-b border-gray-50 pb-2">Dokumentasi</a>
+            <a href="#testimoni" class="mobile-link block text-gray-600 font-medium border-b border-gray-50 pb-2">Testimoni</a>
+            <a href="#tentang" class="mobile-link block text-gray-600 font-medium border-b border-gray-50 pb-2">Tentang</a>
+            <a href="#faq" class="mobile-link block text-gray-600 font-medium border-b border-gray-50 pb-2">FAQ</a>
+            <div class="pt-2">
+                <a href="https://wa.me/6287716798265" target="_blank" class="bg-emerald-700 text-white px-6 py-3 rounded-xl font-medium flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> Konsultasi Gratis
+                </a>
             </div>
         </div>
     </nav>
@@ -427,7 +443,7 @@
                 <div class="reveal reveal-up relative">
                     <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-20%20at%2022.40.13%20(2).jpeg" alt="Layanan Kami" class="rounded-[40px] shadow-2xl w-full h-[500px] object-cover border-4 border-white shadow-2xl">
                 </div>
-                <div>
+                <div class="text-center lg:text-left">
                     <span class="reveal reveal-up text-emerald-600 font-bold tracking-widest text-xs uppercase mb-4 block">Tentang Kami</span>
                     <h2 class="reveal reveal-up delay-100 text-3xl md:text-5xl font-serif font-bold text-emerald-950 mb-8 leading-tight">Terapi Kesehatan Sejati</h2>
                     <p class="reveal reveal-up delay-200 text-lg text-gray-600 mb-8 leading-relaxed">
@@ -494,7 +510,7 @@
                         </div>
                     </summary>
                     <div class="px-5 md:px-6 pb-5 md:pb-6 text-sm md:text-base text-gray-600 leading-relaxed border-t border-gray-50 pt-4">
-                        Tentu, kami menyediakan program pelatihan terapi seperti Zamatera, Fasdu, Bioelectric, hingga Bekam yang dirancang praktis dan aplikatif dengan metode belajar langsung (hands-on) bersama terapis berpengalaman. Kami juga terbiasa menerima pelatihan mencetak terapis untuk DKM masjid, perkantoran, serta berbagai lembaga lainnya.
+                        Tentu, kami menyediakan program pelatihan terapi seperti Zamatera, Fasdu, Bioelectric, hingga Bekam yang dirancang praktis dan aplikatif dengan metode belajar langsung (hands-on) bersama terapis berpengalaman. Kami juga terbiasa mencetak terapis untuk DKM masjid, perkantoran, serta berbagai lembaga lainnya.
                     </div>
                 </details>
 
@@ -596,6 +612,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Observer for Reveal Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -605,6 +622,7 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+        // Slider Logic
         const sliderContainer = document.getElementById('slider-container');
         const items = document.querySelectorAll('.slider-item');
         let index = 0;
@@ -621,8 +639,34 @@
             const movePercentage = isMobile ? index * 100 : index * 33.3333;
             sliderContainer.style.transform = `translateX(-${movePercentage}%)`;
         }
-
         setInterval(nextSlide, 3000);
+
+        // --- FIXED: Mobile Menu Toggle Logic ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    menuIcon.classList.replace('fa-bars', 'fa-xmark');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.replace('fa-xmark', 'fa-bars');
+                }
+            });
+
+            // Auto-close menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.replace('fa-xmark', 'fa-bars');
+                });
+            });
+        }
     });
 </script>
 
