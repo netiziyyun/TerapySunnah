@@ -98,15 +98,40 @@
         /* Slider Custom Styles */
         #slider-container {
             display: flex;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.5s ease-out;
+            cursor: grab;
+            user-select: none;
+        }
+        #slider-container:active {
+            cursor: grabbing;
         }
         .slider-item {
             flex: 0 0 100%;
+            pointer-events: none; /* Mencegah drag pada gambar mengganggu slider drag */
+        }
+        .slider-item > div {
+            pointer-events: auto; /* Mengaktifkan kembali interaksi di dalam card jika perlu */
         }
         @media (min-width: 768px) {
             .slider-item {
                 flex: 0 0 33.3333%;
             }
+        }
+        
+        /* Indikator Carousel */
+        .dot {
+            height: 8px;
+            width: 8px;
+            background-color: #d1d5db;
+            border-radius: 50%;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background-color: #059669;
         }
     </style>
 </head>
@@ -208,32 +233,32 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                 <!-- Card 1: Zamatera -->
-                <div class="reveal reveal-up delay-100 bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center md:text-left flex flex-col items-center md:items-start">
-                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all mx-auto md:mx-0">
+                <div class="reveal reveal-up delay-100 bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center flex flex-col items-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all mx-auto">
                         <i class="fa-solid fa-bone"></i>
                     </div>
                     <h3 class="text-xl font-bold text-emerald-950 mb-4 font-serif">Zamatera</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Terapi perbaikan postur dan relaksasi tulang belakang agar badan kembali bugar.</p>
                 </div>
                 <!-- Card 2: Fasdu -->
-                <div class="reveal reveal-up delay-200 bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center md:text-left flex flex-col items-center md:items-start">
-                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all mx-auto md:mx-0">
+                <div class="reveal reveal-up delay-200 bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center flex flex-col items-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all mx-auto">
                         <i class="fa-solid fa-heart-pulse"></i>
                     </div>
                     <h3 class="text-xl font-bold text-emerald-950 mb-4 font-serif">Fasdu</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Terapi yang membantu mengoptimalkan kondisi darah untuk kesehatan jantung dan sirkulasi.</p>
                 </div>
                 <!-- Card 3: Bioelectric -->
-                <div class="reveal reveal-up delay-300 bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center md:text-left flex flex-col items-center md:items-start">
-                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all mx-auto md:mx-0">
+                <div class="reveal reveal-up delay-300 bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center flex flex-col items-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all mx-auto">
                         <i class="fa-solid fa-bolt"></i>
                     </div>
                     <h3 class="text-xl font-bold text-emerald-950 mb-4 font-serif">Bioelectric</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Stimulasi saraf menggunakan energi listrik mikro untuk membantu pemulihan otot dan rasa nyeri.</p>
                 </div>
                 <!-- Card 4: Bekam -->
-                <div class="reveal reveal-up delay-400 bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center md:text-left flex flex-col items-center md:items-start">
-                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all mx-auto md:mx-0">
+                <div class="reveal reveal-up delay-400 bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center flex flex-col items-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all mx-auto">
                         <i class="fa-solid fa-droplet"></i>
                     </div>
                     <h3 class="text-xl font-bold text-emerald-950 mb-4 font-serif">Bekam</h3>
@@ -300,97 +325,102 @@
         </div>
     </section>
 
-    <!-- 3. Bagian Galeri Layanan (Auto-Slider) -->
+    <!-- 3. Bagian Galeri Layanan (Auto-Slider + Manual Slide) -->
     <section id="galeri" class="py-20 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="reveal reveal-up text-3xl font-serif font-bold text-emerald-950">Galeri Dokumentasi</h2>
             </div>
             
-            <div class="relative">
+            <div class="relative group">
                 <div class="overflow-hidden">
                     <div id="slider-container" class="flex">
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.10.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.10.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.11.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.11.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.12.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.12.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.13%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.13%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.14%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.14%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.13.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.13.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.14%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.14%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.14.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.14.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.55%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.55%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.55%20(2).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.55%20(2).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.55%20(3).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.55%20(3).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/Header-Image.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/Header-Image.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-21%20at%2015.28.13%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-21%20at%2015.28.13%20(1).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-21%20at%2015.28.13%20(2).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-21%20at%2015.28.13%20(2).jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-21%20at%2015.28.13.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-21%20at%2015.28.13.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                         <div class="slider-item px-3 py-4">
                             <div class="bg-white p-3 rounded-[32px] shadow-xl border-2 border-emerald-50">
-                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-21%20at%2015.28.131.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]">
+                                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-21%20at%2015.28.131.jpeg" class="h-[300px] md:h-[400px] w-full object-cover rounded-[24px]" loading="lazy">
                             </div>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Indikator Dots -->
+                <div id="slider-dots" class="flex justify-center gap-2 mt-6">
+                    <!-- Dinamis via JS -->
                 </div>
             </div>
         </div>
@@ -460,7 +490,7 @@
     </section>
 
     <!-- 6. Bagian Filosofi -->
-    <section id="filosofi" class="py-20 md:py-24 bg-gray-50 overflow-hidden">
+    <section id="filosofi" class="py-20 md:py-24 bg-emerald-50 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center">
                 <span class="reveal reveal-up text-emerald-600 font-bold tracking-widest text-xs uppercase mb-4 block">Filosofi Kami</span>
@@ -527,7 +557,7 @@
                         </div>
                     </summary>
                     <div class="px-5 md:px-6 pb-5 md:pb-6 text-sm md:text-base text-gray-600 leading-relaxed border-t border-gray-50 pt-4">
-                        Ya, kami juga melayani kunjungan ke rumah (Home Visit) pasien untuk wilayah Duren Sawit dan sekitarnya. Silakan hubungi kami melalui WhatsApp untuk informasi ketersediaan jadwal terapis.
+                        Ya, kami melayani kunjungan ke rumah (Home Visit) pasien untuk wilayah Duren Sawit dan sekitarnya. Silakan hubungi kami melalui WhatsApp untuk informasi ketersediaan jadwal terapis.
                     </div>
                 </details>
             </div>
@@ -547,7 +577,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="reveal reveal-left">
-                    <h2 class="text-3xl font-serif font-bold text-emerald-950 mb-8">Alamat & Kontak Kami:</h2>
+                    <h2 class="text-3xl font-serif font-bold text-emerald-950 mb-8">Alamat / Kontak Kami:</h2>
                     <div class="space-y-6">
                         <div class="flex gap-4 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
                             <i class="fa-solid fa-location-dot text-emerald-600 mt-1"></i>
@@ -632,24 +662,114 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Slider Logic
+        // --- FIXED: Carousel Logic (Manual & Auto Slide) ---
         const sliderContainer = document.getElementById('slider-container');
+        const dotsContainer = document.getElementById('slider-dots');
         const items = document.querySelectorAll('.slider-item');
+        
         let index = 0;
+        let isDragging = false;
+        let startX, scrollLeft;
+        let autoplayInterval;
+
+        // Inisialisasi Dots
+        function initDots() {
+            dotsContainer.innerHTML = '';
+            const totalDots = items.length;
+            for (let i = 0; i < totalDots; i++) {
+                const dot = document.createElement('span');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    index = i;
+                    updateSlider();
+                    resetAutoplay();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateSlider() {
+            const isMobile = window.innerWidth < 768;
+            const maxIndex = items.length - (isMobile ? 1 : 1); 
+            
+            // Loop logic
+            if (index < 0) index = items.length - 1;
+            if (index >= items.length) index = 0;
+
+            const movePercentage = isMobile ? index * 100 : (index * 33.3333);
+            sliderContainer.style.transform = `translateX(-${movePercentage}%)`;
+            
+            // Update dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
 
         function nextSlide() {
-            index++;
             const isMobile = window.innerWidth < 768;
-            const maxIndex = isMobile ? items.length : items.length - 2;
-
-            if (index >= maxIndex) {
+            const visibleItems = isMobile ? 1 : 3;
+            index++;
+            if (index > items.length - visibleItems) {
                 index = 0;
             }
-
-            const movePercentage = isMobile ? index * 100 : index * 33.3333;
-            sliderContainer.style.transform = `translateX(-${movePercentage}%)`;
+            updateSlider();
         }
-        setInterval(nextSlide, 3000);
+
+        function startAutoplay() {
+            autoplayInterval = setInterval(nextSlide, 3500);
+        }
+
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            startAutoplay();
+        }
+
+        // Mouse & Touch Interaction
+        sliderContainer.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX - sliderContainer.offsetLeft;
+            clearInterval(autoplayInterval);
+        });
+
+        sliderContainer.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].pageX - sliderContainer.offsetLeft;
+            clearInterval(autoplayInterval);
+        });
+
+        const handleDrag = (currentX) => {
+            if (!isDragging) return;
+            const diff = currentX - startX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) index--;
+                else index++;
+                isDragging = false;
+                updateSlider();
+                startAutoplay();
+            }
+        };
+
+        sliderContainer.addEventListener('mousemove', (e) => handleDrag(e.pageX - sliderContainer.offsetLeft));
+        sliderContainer.addEventListener('touchmove', (e) => handleDrag(e.touches[0].pageX - sliderContainer.offsetLeft));
+
+        window.addEventListener('mouseup', () => {
+            if(isDragging) {
+                isDragging = false;
+                startAutoplay();
+            }
+        });
+        
+        sliderContainer.addEventListener('touchend', () => {
+            if(isDragging) {
+                isDragging = false;
+                startAutoplay();
+            }
+        });
+
+        initDots();
+        startAutoplay();
 
         // --- FIXED: Mobile Menu Toggle Logic ---
         const menuToggle = document.getElementById('menu-toggle');
@@ -669,7 +789,6 @@
                 }
             });
 
-            // Auto-close menu when a link is clicked
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');
