@@ -98,19 +98,20 @@
         /* Slider Custom Styles */
         #slider-container {
             display: flex;
-            transition: transform 0.5s ease-out;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: grab;
             user-select: none;
+            touch-action: pan-y;
         }
         #slider-container:active {
             cursor: grabbing;
         }
         .slider-item {
             flex: 0 0 100%;
-            pointer-events: none; /* Mencegah drag pada gambar mengganggu slider drag */
+            pointer-events: none; 
         }
         .slider-item > div {
-            pointer-events: auto; /* Mengaktifkan kembali interaksi di dalam card jika perlu */
+            pointer-events: auto;
         }
         @media (min-width: 768px) {
             .slider-item {
@@ -137,13 +138,16 @@
 </head>
 <body class="bg-white">
 
-<div class="ts-wrapper">
+<div class="ts-wrapper" id="top">
     <!-- Navigasi -->
     <nav class="fixed top-0 left-0 w-full z-[9999] transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center">
-                    <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/ce1e40bc981d8c63ebdfb617bc28dc044634ef71/LOGO%20SEJATI.png" alt="Terapi Kesehatan Sejati" class="h-14 md:h-16 w-auto">
+                    <!-- Logo navigasi yang boleh diklik untuk ke atas -->
+                    <a href="#top" class="block">
+                        <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/ce1e40bc981d8c63ebdfb617bc28dc044634ef71/LOGO%20SEJATI.png" alt="Terapi Kesehatan Sejati" class="h-14 md:h-16 w-auto transition-opacity hover:opacity-80">
+                    </a>
                 </div>
                 <!-- Desktop Menu -->
                 <div class="hidden lg:flex space-x-6 xl:space-x-8 items-center">
@@ -326,7 +330,7 @@
         </div>
     </section>
 
-    <!-- 3. Bagian Galeri Layanan (Auto-Slider + Manual Slide) -->
+    <!-- 3. Bagian Galeri Dokumentasi (Auto + Manual + Trackpad) -->
     <section id="galeri" class="py-20 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-12">
@@ -420,7 +424,7 @@
                 </div>
                 
                 <!-- Indikator Dots -->
-                <div id="slider-dots" class="flex justify-center gap-2 mt-6">
+                <div id="slider-dots" class="flex justify-center flex-wrap gap-2 mt-8 px-4">
                     <!-- Dinamis via JS -->
                 </div>
             </div>
@@ -632,7 +636,10 @@
     <footer class="bg-white py-12 md:py-20 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-4 md:px-8">
             <div class="flex flex-col items-center justify-center p-12 md:p-16 rounded-[40px] overflow-hidden shadow-2xl border border-gray-100 bg-white">
-                <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/ce1e40bc981d8c63ebdfb617bc28dc044634ef71/LOGO%20SEJATI.png" alt="Logo Sejati" class="w-80 md:w-[450px] h-auto transform hover:scale-105 transition-transform duration-500">
+                <!-- Logo footer yang boleh diklik untuk ke atas -->
+                <a href="#top" class="block transform hover:scale-105 transition-transform duration-500">
+                    <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/ce1e40bc981d8c63ebdfb617bc28dc044634ef71/LOGO%20SEJATI.png" alt="Logo Sejati" class="w-80 md:w-[450px] h-auto">
+                </a>
             </div>
             <div class="mt-12 text-center text-gray-400 text-[10px] uppercase tracking-widest font-bold">
                 &copy; 2026 TerapiKesehatanSejati.com • All Rights Reserved
@@ -653,7 +660,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Observer for Reveal Animation
+        // --- Observer for Reveal Animation ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -663,15 +670,16 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // --- FIXED: Carousel Logic (Manual & Auto Slide) ---
+        // --- Carousel Logic (Auto + Manual + Trackpad) ---
         const sliderContainer = document.getElementById('slider-container');
         const dotsContainer = document.getElementById('slider-dots');
         const items = document.querySelectorAll('.slider-item');
         
         let index = 0;
         let isDragging = false;
-        let startX, scrollLeft;
+        let startX, currentTranslate;
         let autoplayInterval;
+        let wheelCooldown = false;
 
         // Inisialisasi Dots
         function initDots() {
@@ -726,22 +734,33 @@
             startAutoplay();
         }
 
-        // Mouse & Touch Interaction
-        sliderContainer.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.pageX - sliderContainer.offsetLeft;
-            clearInterval(autoplayInterval);
-        });
+        // Mousepad/Trackpad Interaction (Wheel Event)
+        sliderContainer.addEventListener('wheel', (e) => {
+            if (Math.abs(e.deltaX) > 15 && !wheelCooldown) {
+                if (e.deltaX > 0) index++;
+                else index--;
+                
+                updateSlider();
+                resetAutoplay();
+                
+                wheelCooldown = true;
+                setTimeout(() => wheelCooldown = false, 600); // Cooldown to prevent multi-swipe
+                e.preventDefault();
+            }
+        }, { passive: false });
 
-        sliderContainer.addEventListener('touchstart', (e) => {
+        // Touch & Drag Interaction
+        const dragStart = (e) => {
             isDragging = true;
-            startX = e.touches[0].pageX - sliderContainer.offsetLeft;
+            startX = e.type.includes('touch') ? e.touches[0].pageX : e.pageX;
             clearInterval(autoplayInterval);
-        });
+        };
 
-        const handleDrag = (currentX) => {
+        const dragAction = (e) => {
             if (!isDragging) return;
-            const diff = currentX - startX;
+            const x = e.type.includes('touch') ? e.touches[0].pageX : e.pageX;
+            const diff = x - startX;
+            
             if (Math.abs(diff) > 50) {
                 if (diff > 0) index--;
                 else index++;
@@ -751,27 +770,24 @@
             }
         };
 
-        sliderContainer.addEventListener('mousemove', (e) => handleDrag(e.pageX - sliderContainer.offsetLeft));
-        sliderContainer.addEventListener('touchmove', (e) => handleDrag(e.touches[0].pageX - sliderContainer.offsetLeft));
+        sliderContainer.addEventListener('mousedown', dragStart);
+        sliderContainer.addEventListener('touchstart', dragStart);
+        sliderContainer.addEventListener('mousemove', dragAction);
+        sliderContainer.addEventListener('touchmove', dragAction);
 
-        window.addEventListener('mouseup', () => {
+        const dragEnd = () => {
             if(isDragging) {
                 isDragging = false;
                 startAutoplay();
             }
-        });
-        
-        sliderContainer.addEventListener('touchend', () => {
-            if(isDragging) {
-                isDragging = false;
-                startAutoplay();
-            }
-        });
+        };
+        window.addEventListener('mouseup', dragEnd);
+        sliderContainer.addEventListener('touchend', dragEnd);
 
         initDots();
         startAutoplay();
 
-        // --- FIXED: Mobile Menu Toggle Logic ---
+        // --- Mobile Menu Toggle Logic ---
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
