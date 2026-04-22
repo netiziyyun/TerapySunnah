@@ -144,7 +144,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center">
-                    <!-- Logo navigasi yang boleh diklik untuk ke atas -->
                     <a href="#top" class="block">
                         <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/ce1e40bc981d8c63ebdfb617bc28dc044634ef71/LOGO%20SEJATI.png" alt="Terapi Kesehatan Sejati" class="h-14 md:h-16 w-auto transition-opacity hover:opacity-80">
                     </a>
@@ -157,7 +156,6 @@
                     <a href="#tentang" class="text-gray-600 hover:text-emerald-600 font-medium transition">Tentang</a>
                     <a href="#faq" class="text-gray-600 hover:text-emerald-600 font-medium transition">FAQ</a>
                     
-                    <!-- Kontak di samping navigasi -->
                     <div class="flex items-center gap-4 ml-2">
                         <a href="#kontak" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-full font-medium transition flex items-center gap-2 whitespace-nowrap">
                             <i class="fa-solid fa-address-book"></i> Kontak Kami
@@ -171,7 +169,7 @@
             </div>
         </div>
 
-        <!-- Mobile Menu Container (Lebar Disesuaikan & Rata Kanan) -->
+        <!-- Mobile Menu Container -->
         <div id="mobile-menu" class="hidden lg:hidden bg-white border-l border-b border-gray-100 absolute w-fit min-w-[200px] right-0 shadow-2xl py-6 px-6 space-y-4 rounded-bl-3xl">
             <a href="#layanan" class="mobile-link block text-right text-gray-600 font-medium border-b border-gray-50 pb-3">Layanan</a>
             <a href="#galeri" class="mobile-link block text-right text-gray-600 font-medium border-b border-gray-50 pb-3">Dokumentasi</a>
@@ -217,7 +215,6 @@
                     </div>
                 </div>
 
-                <!-- Gambar disembunyikan pada mode mobile, muncul pada mode desktop (lg) -->
                 <div class="reveal reveal-right delay-200 relative px-4 lg:px-0 hidden lg:block">
                     <div class="relative rounded-[32px] md:rounded-[40px] overflow-hidden border-4 md:border-8 border-white shadow-2xl">
                         <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/rev-image-2.jpeg" alt="Sesi Terapi" class="w-full h-[350px] md:h-[550px] object-cover">
@@ -330,7 +327,7 @@
         </div>
     </section>
 
-    <!-- 3. Bagian Galeri Dokumentasi (Auto + Manual + Trackpad) -->
+    <!-- 3. Bagian Galeri Dokumentasi -->
     <section id="galeri" class="py-20 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-12">
@@ -444,33 +441,35 @@
                 <p class="reveal reveal-up delay-100 text-emerald-300/80">Pasien yang telah merasakan manfaat nyata setelah menjalani terapi bersama kami.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="reveal reveal-up delay-100 video-card aspect-video bg-emerald-900 rounded-[32px] relative overflow-hidden group cursor-pointer border border-white/10 shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover opacity-60">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="play-btn w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all duration-300">
-                            <i class="fa-solid fa-play text-2xl"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 max-w-5xl mx-auto">
+                <!-- Testimoni Pak Slamet -->
+                <div class="reveal reveal-up delay-100 flex flex-col items-center">
+                    <div class="video-card aspect-video bg-emerald-900 rounded-[32px] relative overflow-hidden group cursor-pointer border border-white/10 shadow-2xl w-full" onclick="toggleVideo(this)">
+                        <video class="w-full h-full object-cover opacity-60" preload="metadata">
+                            <source src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/main/Testimoni%20Pak%20Slamet%20(Edited).mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 flex items-center justify-center play-overlay">
+                            <div class="play-btn w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all duration-300">
+                                <i class="fa-solid fa-play text-2xl"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="absolute bottom-6 left-6 text-white font-bold text-sm">Testimoni Bapak Ahmad</div>
+                    <div class="mt-6 text-white font-bold text-lg md:text-xl tracking-wide font-sans">Testimoni Pak Slamet</div>
                 </div>
-                <div class="reveal reveal-up delay-200 video-card aspect-video bg-emerald-900 rounded-[32px] relative overflow-hidden group cursor-pointer border border-white/10 shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover opacity-60">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="play-btn w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all duration-300">
-                            <i class="fa-solid fa-play text-2xl"></i>
+
+                <!-- Testimoni Pak Budi -->
+                <div class="reveal reveal-up delay-200 flex flex-col items-center">
+                    <div class="video-card aspect-video bg-emerald-900 rounded-[32px] relative overflow-hidden group cursor-pointer border border-white/10 shadow-2xl w-full" onclick="toggleVideo(this)">
+                        <video class="w-full h-full object-cover opacity-60" preload="metadata">
+                            <source src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/main/Testimoni%20Terapi%20dari%20Pak%20Budi%20(Edited).mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 flex items-center justify-center play-overlay">
+                            <div class="play-btn w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all duration-300">
+                                <i class="fa-solid fa-play text-2xl"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="absolute bottom-6 left-6 text-white font-bold text-sm">Testimoni Ibu Fatimah</div>
-                </div>
-                <div class="reveal reveal-up delay-300 video-card aspect-video bg-emerald-900 rounded-[32px] relative overflow-hidden group cursor-pointer border border-white/10 shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1512677859289-868722942457?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover opacity-60">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="play-btn w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all duration-300">
-                            <i class="fa-solid fa-play text-2xl"></i>
-                        </div>
-                    </div>
-                    <div class="absolute bottom-6 left-6 text-white font-bold text-sm">Testimoni Pasien Umum</div>
+                    <div class="mt-6 text-white font-bold text-lg md:text-xl tracking-wide font-sans">Testimoni Pak Budi</div>
                 </div>
             </div>
         </div>
@@ -481,7 +480,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="reveal reveal-up relative">
-                    <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-20%20at%2022.40.13%20(2).jpeg" alt="Layanan Kami" class="rounded-[40px] shadow-2xl w-full h-[500px] object-cover border-4 border-white shadow-2xl">
+                    <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/Dokumentasi-Terapi/WhatsApp%20Image%202026-04-20%20at%2022.40.13%20(2).jpeg" alt="Layanan Kami" class="rounded-[40px] shadow-2xl w-full h-[500px] object-cover border-4 border-white">
                 </div>
                 <div class="text-center lg:text-left">
                     <span class="reveal reveal-up text-emerald-600 font-bold tracking-widest text-xs uppercase mb-4 block">Tentang Kami</span>
@@ -503,13 +502,12 @@
                 <p class="reveal reveal-up delay-200 text-lg text-gray-600 leading-relaxed mb-12">
                     Kesehatan fisik dan pikiran adalah aset paling berharga dalam kehidupan, ia juga menjadi kunci kualitas hidup yang lebih baik. Kami hadir untuk membantu Anda menjaga keseimbangan tubuh melalui berbagai metode terapi yang aman, profesional, dan berfokus pada pemulihan kebugaran secara alami.
                 </p>
-                <!-- Quote Box dengan Background Image Baru -->
+                <!-- Quote Box -->
                 <div class="reveal reveal-up delay-300 p-12 md:p-16 rounded-[40px] relative text-white overflow-hidden">
                     <div class="absolute inset-0">
                         <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/9495c11227b5fa46874cd65839ca38ca2dd1a75a/WhatsApp%20Image%202026-04-20%20at%2022.40.55%20(3).jpeg" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-emerald-900/80"></div>
                     </div>
-                    <!-- Revisi: Quote icon baru di sudut kiri atas berwarna putih -->
                     <i class="fa-solid fa-quote-left absolute top-6 left-6 md:top-10 md:left-10 text-4xl md:text-5xl text-white z-10 opacity-60"></i>
                     <p class="text-xl md:text-2xl font-serif italic relative z-10 leading-relaxed pt-4">
                         "Mencegah jauh lebih baik daripada mengobati. Rawat tubuh Anda sebelum ia meminta perhatian melalui rasa sakit."
@@ -529,7 +527,7 @@
             </div>
 
             <div class="space-y-4 mb-16">
-                <!-- FAQ Item 1 -->
+                <!-- FAQ Items -->
                 <details name="faq-accordion" class="reveal reveal-up delay-100 faq-accordion group bg-white rounded-2xl border border-gray-200 transition-all hover:border-emerald-200">
                     <summary class="flex items-center justify-between cursor-pointer list-none p-5 md:p-6">
                         <h4 class="font-bold text-emerald-950 text-base md:text-lg pr-4">Berapa biaya untuk sekali terapi zamatera/fasdu/bioelectric/bekam?</h4>
@@ -636,7 +634,6 @@
     <footer class="bg-white py-12 md:py-20 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-4 md:px-8">
             <div class="flex flex-col items-center justify-center p-12 md:p-16 rounded-[40px] overflow-hidden shadow-2xl border border-gray-100 bg-white">
-                <!-- Logo footer yang boleh diklik untuk ke atas -->
                 <a href="#top" class="block transform hover:scale-105 transition-transform duration-500">
                     <img src="https://raw.githubusercontent.com/netiziyyun/TerapySunnah/ce1e40bc981d8c63ebdfb617bc28dc044634ef71/LOGO%20SEJATI.png" alt="Logo Sejati" class="w-80 md:w-[450px] h-auto">
                 </a>
@@ -659,6 +656,37 @@
 </a>
 
 <script>
+    // Fungsi global untuk memutar/menghentikan video dengan logika auto-pause dan restart
+    function toggleVideo(card) {
+        const video = card.querySelector('video');
+        const overlay = card.querySelector('.play-overlay');
+        const allCards = document.querySelectorAll('.video-card');
+
+        if (video.paused) {
+            // Berhentikan semua video lain (Auto Pause)
+            allCards.forEach(c => {
+                const v = c.querySelector('video');
+                const o = c.querySelector('.play-overlay');
+                if (v !== video) {
+                    v.pause();
+                    v.classList.add('opacity-60');
+                    o.classList.remove('hidden');
+                }
+            });
+
+            // Mulai video target dari awal (Ngulang dari awal)
+            video.currentTime = 0;
+            video.play();
+            video.classList.remove('opacity-60');
+            overlay.classList.add('hidden');
+        } else {
+            // Jika sedang berputar, klik lagi untuk pause
+            video.pause();
+            video.classList.add('opacity-60');
+            overlay.classList.remove('hidden');
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         // --- Observer for Reveal Animation ---
         const observer = new IntersectionObserver((entries) => {
@@ -670,22 +698,20 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // --- Carousel Logic (Auto + Manual + Trackpad) ---
+        // --- Carousel Logic ---
         const sliderContainer = document.getElementById('slider-container');
         const dotsContainer = document.getElementById('slider-dots');
         const items = document.querySelectorAll('.slider-item');
         
         let index = 0;
         let isDragging = false;
-        let startX, currentTranslate;
+        let startX;
         let autoplayInterval;
         let wheelCooldown = false;
 
-        // Inisialisasi Dots
         function initDots() {
             dotsContainer.innerHTML = '';
-            const totalDots = items.length;
-            for (let i = 0; i < totalDots; i++) {
+            for (let i = 0; i < items.length; i++) {
                 const dot = document.createElement('span');
                 dot.classList.add('dot');
                 if (i === 0) dot.classList.add('active');
@@ -700,15 +726,12 @@
 
         function updateSlider() {
             const isMobile = window.innerWidth < 768;
-            
-            // Loop logic
             if (index < 0) index = items.length - 1;
             if (index >= items.length) index = 0;
 
             const movePercentage = isMobile ? index * 100 : (index * 33.3333);
             sliderContainer.style.transform = `translateX(-${movePercentage}%)`;
             
-            // Update dots
             const dots = document.querySelectorAll('.dot');
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === index);
@@ -734,7 +757,7 @@
             startAutoplay();
         }
 
-        // Mousepad/Trackpad Interaction (Wheel Event)
+        // Trackpad Interaction
         sliderContainer.addEventListener('wheel', (e) => {
             if (Math.abs(e.deltaX) > 15 && !wheelCooldown) {
                 if (e.deltaX > 0) index++;
@@ -744,7 +767,7 @@
                 resetAutoplay();
                 
                 wheelCooldown = true;
-                setTimeout(() => wheelCooldown = false, 600); // Cooldown to prevent multi-swipe
+                setTimeout(() => wheelCooldown = false, 600);
                 e.preventDefault();
             }
         }, { passive: false });
@@ -787,7 +810,7 @@
         initDots();
         startAutoplay();
 
-        // --- Mobile Menu Toggle Logic ---
+        // --- Mobile Menu Toggle ---
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
